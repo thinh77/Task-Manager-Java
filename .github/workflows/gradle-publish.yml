@@ -42,18 +42,3 @@ jobs:
           port: 22 # Default SSH port
           source: build/libs/*.jar # Path to your built JAR file
           target: /home/${{ secrets.VM_USERNAME }}/app.jar # Target directory on the VM
-
-      - name: SSH and Run Application on VM
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USERNAME }}
-          key: ${{ secrets.GCP_SSH_PRIVATE_KEY }} # If using SSH key authentication (more secure) - see notes below
-          port: 22 # Default SSH port
-          script: |
-            echo "Stopping previous application (if running)..."
-            pkill -f app.jar || true # Attempt to stop if running, ignore error if not
-
-            echo "Starting new application..."
-            nohup java -jar /home/${{ secrets.VM_USERNAME }}/app.jar > app.log 2>&1 &
-            echo "Application started in background. Check app.log for details."
