@@ -28,9 +28,6 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Test with Gradle # Optional, if you have tests
-        run: ./gradlew test
-
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
